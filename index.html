@@ -1,1 +1,114 @@
-<title>Kilogram of Apples Index</title>
+<!DOCTYPE html>
+<html>
+    <head>
+
+        <!--Assignment 3 - Cmput191 - by Natalie Ohanjanians, nohanjan
+            Background image: https://unsplash.com/photos/red-and-brown-round-fruits-abSGJhSzRMI
+            HTML and CSS written by Natalie Ohanjanians-->
+
+        <title>Apples Index</title>
+        <link rel="stylesheet" href="style.css">
+  
+    </head>
+    <body>
+        <h1>The Apples Index</h1>
+        <h3 class="center">By Natalie Ohanjanians, nohanjan<br>CMPUT 191, December 2023<br>The Big Mac Index of 1kg of Apples</h3>
+
+        <div class="paradiv">
+            <h1 class="center, header" ">Introduction</h1>
+            <p class="paratext">For this assignment, I chose to find the "Big Mac Index" of one kilogram worth of apples. A country's market for fruit is dependent on many variables; including how much of that fruit grows locally to the region, versus needing to be imported. This assignment contrasts the price of one kilogram of apples in Canada with the same amount in various other countries, taking tax into account, as well as an external factor-- the fruit production of the country.</p>
+        </div>
+
+        <div class="paradiv, onleft" style="padding-top: 50px">
+            <h1 class="center, header">1) Importing the Table</h1>
+            <p class="paratext">I imported an html table providing the price of 1 kilogram of apples of 97 countries, as well as the rank of each country in order. I removed the rank column after using BeautifulSoup to parse and Pandas (data analysis library) to convert the table into something usable.</p>
+        </div> 
+        <pre class="onright" style="margin-top: -180px">
+            <p class="code, codediv">
+                '''
+                imports
+                '''
+                from datascience import *
+                import numpy as np
+
+                %matplotlib inline
+                import matplotlib.pyplot as plots
+                plots.style.use('fivethirtyeight')
+
+                import pandas as pd
+
+                import requests
+                from bs4 import BeautifulSoup
+
+                '''
+                get the table, parse using beautifulsoup
+                '''
+                url = "https://www.numbeo.com/cost-of-l..."
+                r = requests.get(url)
+                html = BeautifulSoup(r.text, 'html.parser')
+                htmltable = html.findAll('table')[1]
+
+                def table_scraper(htmltable):
+                scrape = pd.read_html(str(htmltable))
+                scrape = pd.DataFrame(scrape[0])
+                return Table.from_df(scrape)
+
+                imported = table_scraper(htmltable)
+                imported
+
+            </p>
+            <table>
+                <thead>
+                <tr>
+                <th><div style="font-size: 80%; vertical-align: middle;">Rank</div></th>
+                <th><div class="font_in_table_headers">Country</div></th><th><div class="font_in_table_headers">Apples <br/>(1kg)</div></th></tr>
+                </thead>
+                <tbody>
+                <tr><td></td>
+                <td style="white-space:nowrap"><a href="https://www.numbeo.com/cost-of-living/country_result.jsp?country=Kazakhstan">Kazakhstan</a></td><td style="white-space: nowrap; text-align: right">1.68</td></tr>
+                <tr><td></td>
+                <td style="white-space:nowrap"><a href="https://www.numbeo.com/cost-of-living/country_result.jsp?country=Portugal">Portugal</a></td><td style="white-space: nowrap; text-align: right">2.66</td></tr>
+                <tr><td></td>
+                <td style="white-space:nowrap"><a href="https://www.numbeo.com/cost-of-living/country_result.jsp?country=Greece">Greece</a></td><td style="white-space: nowrap; text-align: right">2.53</td></tr>
+                <tr><td></td>
+                <td style="white-space:nowrap"><a href="https://www.numbeo.com/cost-of-living/country_result.jsp?country=Latvia">Latvia</a></td><td style="white-space: nowrap; text-align: right">1.81</td></tr>
+                <tr><td></td>
+                <td style="white-space:nowrap"><a href="https://www.numbeo.com/cost-of-living/country_result.jsp?country=Iran">Iran</a></td><td style="white-space: nowrap; text-align: right">1.29</td></tr>
+                <tr><td></td>
+                <td style="white-space:nowrap"><a href="https://www.numbeo.com/cost-of-living/country_result.jsp?country=Morocco">Morocco</a></td><td style="white-space: nowrap; text-align: right">1.72</td></tr>
+                <tr><td></td>
+                <td style="white-space:nowrap"><a href="https://www.numbeo.com/cost-of-living/country_result.jsp?country=Panama">Panama</a></td><td style="white-space: nowrap; text-align: right">3.88</td></tr>
+                <tr><td></td>
+                <td style="white-space:nowrap"><a href="https://www.numbeo.com/cost-of-living/country_result.jsp?country=Iraq">Iraq</a></td><td style="white-space: nowrap; text-align: right">1.32</td></tr>
+                <tr><td></td>
+                <td style="white-space:nowrap"><a href="https://www.numbeo.com/cost-of-living/country_result.jsp?country=Chile">Chile</a></td><td style="white-space: nowrap; text-align: right">2.61</td></tr>
+                <tr><td></td>
+                <td style="white-space:nowrap"><a href="https://www.numbeo.com/cost-of-living/country_result.jsp?country=Nepal">Nepal</a></td><td style="white-space: nowrap; text-align: right">3.09</td></tr>
+                <tr><td></td>
+                <td style="white-space:nowrap"><a href="https://www.numbeo.com/cost-of-living/country_result.jsp?country=Argentina">Argentina</a></td><td style="white-space: nowrap; text-align: right">2.11</td></tr>
+                <tr><td></td>
+                <td style="white-space:nowrap"><a href="https://www.numbeo.com/cost-of-living/country_result.jsp?country=Ukraine">Ukraine</a></td><td style="white-space: nowrap; text-align: right">0.89</td></tr>
+                <tr><td></td>
+                <td style="white-space:nowrap"><a href="https://www.numbeo.com/cost-of-living/country_result.jsp?country=India">India</a></td><td style="white-space: nowrap; text-align: right">2.68</td></tr>
+                <tr><td></td>
+                <td style="white-space:nowrap"><a href="https://www.numbeo.com/cost-of-living/country_result.jsp?country=Canada">Canada</a></td><td style="white-space: nowrap; text-align: right">5.26</td></tr>
+                <tr><td></td>
+                <td style="white-space:nowrap"><a href="https://www.numbeo.com/cost-of-living/country_result.jsp?country=Turkey">Turkey</a></td><td style="white-space: nowrap; text-align: right">1.39</td></tr>                </tbody>
+                </table>
+
+                
+        </pre> 
+
+        <p style="text-align:center">Credits:
+                <br>
+            <a href="https://www.numbeo.com/cost-of-living/prices_by_country.jsp?displayCurrency=CAD&itemId=110">numbeo.com -- table of prices of 1kg of apples for many countries, in CAD</a>
+                <br>
+            <a href="https://gist.github.com/HarishChaudhari/4680482">Github table listing country codes by Harish Chaudhari</a>
+                <br>
+            <a href="https://en.wikipedia.org/wiki/Value-added_tax">Table of taxes</a>
+                <br>
+            <a href="https://en.wikipedia.org/wiki/List_of_countries_by_fruit_production">Table of fruit production (tonnes) by country</a>
+        </p>
+    </body>
+
+</html>
