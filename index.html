@@ -3,13 +3,12 @@
     <head>
 
         <!--Assignment 3 - Cmput191 - by Natalie Ohanjanians, nohanjan
-            Background image: https://unsplash.com/photos/red-and-brown-round-fruits-abSGJhSzRMI
             HTML and CSS written by Natalie Ohanjanians-->
 
         <title>Apples Index</title>
         <link rel="stylesheet" href="style.css">
   
-    </head>
+    </head> 
     <body>
         <h1>The Apples Index</h1>
         <h3 class="center">By Natalie Ohanjanians, nohanjan<br>CMPUT 191, December 2023<br>The Big Mac Index of 1kg of Apples</h3>
@@ -18,96 +17,287 @@
             <h1 class="center, header" ">Introduction</h1>
             <p class="paratext">For this assignment, I chose to find the "Big Mac Index" of one kilogram worth of apples. A country's market for fruit is dependent on many variables; including how much of that fruit grows locally to the region, versus needing to be imported. This assignment contrasts the price of one kilogram of apples in Canada with the same amount in various other countries, taking tax into account, as well as an external factor-- the fruit production of the country.</p>
         </div>
+        
+        <img src="pictures/cuteapple.png" style="width:10%;height:10%;margin-left:auto;margin-right:auto;display:block;padding-top:40px">
 
         <div class="paradiv, onleft" style="padding-top: 50px">
-            <h1 class="center, header">1) Importing the Table</h1>
-            <p class="paratext">I imported an html table providing the price of 1 kilogram of apples of 97 countries, as well as the rank of each country in order. I removed the rank column after using BeautifulSoup to parse and Pandas (data analysis library) to convert the table into something usable.</p>
+            <h1 class="center, header">1) Importing the table</h1>
+            <p class="paratext">I imported an HTML table providing the price of 1 kilogram of apples of 97 countries, as well as the rank of each country in order, from numbeo.com. I used BeautifulSoup to parse the table and Pandas (data analysis library) to convert the table into something usable.<br><br>Result:</p>
+            <img src="pictures/1.jpg" style="margin-left: 35%; margin-top: -5%">
         </div> 
-        <pre class="onright" style="margin-top: -180px">
-            <p class="code, codediv">
-                '''
-                imports
-                '''
-                from datascience import *
-                import numpy as np
+        <pre class="onright" style="margin-top: -500px">
+            <p class="codediv"><span class="comment">'''
+imports
+'''</span>
+from datascience import *
+import numpy as np
 
-                %matplotlib inline
-                import matplotlib.pyplot as plots
-                plots.style.use('fivethirtyeight')
+%matplotlib inline
+import matplotlib.pyplot as plots
+plots.style.use('fivethirtyeight')
 
-                import pandas as pd
+import pandas as pd
 
-                import requests
-                from bs4 import BeautifulSoup
+import requests
+from bs4 import BeautifulSoup
 
-                '''
-                get the table, parse using beautifulsoup
-                '''
-                url = "https://www.numbeo.com/cost-of-l..."
-                r = requests.get(url)
-                html = BeautifulSoup(r.text, 'html.parser')
-                htmltable = html.findAll('table')[1]
+<span class="comment">'''
+get the table, parse using beautifulsoup
+'''</span>
+url = "https://www.numbeo.com/cost-of-l..."
+r = requests.get(url)
+html = BeautifulSoup(r.text, 'html.parser')
+htmltable = html.findAll('table')[1]
 
-                def table_scraper(htmltable):
-                scrape = pd.read_html(str(htmltable))
-                scrape = pd.DataFrame(scrape[0])
-                return Table.from_df(scrape)
+def table_scraper(htmltable):
+scrape = pd.read_html(str(htmltable))
+scrape = pd.DataFrame(scrape[0])
+return Table.from_df(scrape)
 
-                imported = table_scraper(htmltable)
-                imported
+imported = table_scraper(htmltable)
+imported
 
             </p>
-            <table>
-                <thead>
-                <tr>
-                <th><div style="font-size: 80%; vertical-align: middle;">Rank</div></th>
-                <th><div class="font_in_table_headers">Country</div></th><th><div class="font_in_table_headers">Apples <br/>(1kg)</div></th></tr>
-                </thead>
-                <tbody>
-                <tr><td></td>
-                <td style="white-space:nowrap"><a href="https://www.numbeo.com/cost-of-living/country_result.jsp?country=Kazakhstan">Kazakhstan</a></td><td style="white-space: nowrap; text-align: right">1.68</td></tr>
-                <tr><td></td>
-                <td style="white-space:nowrap"><a href="https://www.numbeo.com/cost-of-living/country_result.jsp?country=Portugal">Portugal</a></td><td style="white-space: nowrap; text-align: right">2.66</td></tr>
-                <tr><td></td>
-                <td style="white-space:nowrap"><a href="https://www.numbeo.com/cost-of-living/country_result.jsp?country=Greece">Greece</a></td><td style="white-space: nowrap; text-align: right">2.53</td></tr>
-                <tr><td></td>
-                <td style="white-space:nowrap"><a href="https://www.numbeo.com/cost-of-living/country_result.jsp?country=Latvia">Latvia</a></td><td style="white-space: nowrap; text-align: right">1.81</td></tr>
-                <tr><td></td>
-                <td style="white-space:nowrap"><a href="https://www.numbeo.com/cost-of-living/country_result.jsp?country=Iran">Iran</a></td><td style="white-space: nowrap; text-align: right">1.29</td></tr>
-                <tr><td></td>
-                <td style="white-space:nowrap"><a href="https://www.numbeo.com/cost-of-living/country_result.jsp?country=Morocco">Morocco</a></td><td style="white-space: nowrap; text-align: right">1.72</td></tr>
-                <tr><td></td>
-                <td style="white-space:nowrap"><a href="https://www.numbeo.com/cost-of-living/country_result.jsp?country=Panama">Panama</a></td><td style="white-space: nowrap; text-align: right">3.88</td></tr>
-                <tr><td></td>
-                <td style="white-space:nowrap"><a href="https://www.numbeo.com/cost-of-living/country_result.jsp?country=Iraq">Iraq</a></td><td style="white-space: nowrap; text-align: right">1.32</td></tr>
-                <tr><td></td>
-                <td style="white-space:nowrap"><a href="https://www.numbeo.com/cost-of-living/country_result.jsp?country=Chile">Chile</a></td><td style="white-space: nowrap; text-align: right">2.61</td></tr>
-                <tr><td></td>
-                <td style="white-space:nowrap"><a href="https://www.numbeo.com/cost-of-living/country_result.jsp?country=Nepal">Nepal</a></td><td style="white-space: nowrap; text-align: right">3.09</td></tr>
-                <tr><td></td>
-                <td style="white-space:nowrap"><a href="https://www.numbeo.com/cost-of-living/country_result.jsp?country=Argentina">Argentina</a></td><td style="white-space: nowrap; text-align: right">2.11</td></tr>
-                <tr><td></td>
-                <td style="white-space:nowrap"><a href="https://www.numbeo.com/cost-of-living/country_result.jsp?country=Ukraine">Ukraine</a></td><td style="white-space: nowrap; text-align: right">0.89</td></tr>
-                <tr><td></td>
-                <td style="white-space:nowrap"><a href="https://www.numbeo.com/cost-of-living/country_result.jsp?country=India">India</a></td><td style="white-space: nowrap; text-align: right">2.68</td></tr>
-                <tr><td></td>
-                <td style="white-space:nowrap"><a href="https://www.numbeo.com/cost-of-living/country_result.jsp?country=Canada">Canada</a></td><td style="white-space: nowrap; text-align: right">5.26</td></tr>
-                <tr><td></td>
-                <td style="white-space:nowrap"><a href="https://www.numbeo.com/cost-of-living/country_result.jsp?country=Turkey">Turkey</a></td><td style="white-space: nowrap; text-align: right">1.39</td></tr>                </tbody>
-                </table>
-
-                
         </pre> 
 
-        <p style="text-align:center">Credits:
+        <img src="pictures/cuteapple.png" style="width:10%;height:10%;margin-left:auto;margin-right:auto;display:block;padding-top:50">
+
+
+        <div class="paradiv, onleft" style="padding-top: 50px">
+            <h1 class="center, header">2) Tidying Data, adding Tax Rates</h1>
+            <p class="paratext">Here, I removed the rank column, and used a table providing percentage tax rates to acquire the percentage for every country I could. I used a loop to figure out what countries are provided in the list versus the list I already have, so that I know what to eliminate. This ended up with the number of countries I have the data to use to reduce to 87. I added a column for the percentage tax rate, as well as the price with taxes applied.<br><br>Result:</p>
+            <img src="pictures/2.jpg" style="margin-left: 18%; margin-top: -5%">
+        </div> 
+        <pre class="onright" style="margin-top: -500px">
+            <p class="codediv"><span class="comment">'''
+remove column for rank
+'''</span>
+norank = imported.drop("Rank").relabel("Apples (1kg)", "Price (CAD$)")
+norank = norank.sort("Country")
+
+<span class="comment"># GETTING TAX RATES FROM HTML TABLE, SAME METHOD AS PREVIOUS, so make function!</span>
+
+def find_htmltable(url, tablenumber):
+    r = requests.get(url)
+    html = BeautifulSoup(r.text, 'html.parser')
+    htmltable = html.findAll('table')[tablenumber]
+    return htmltable
+
+<span class="comment"># different tables for eu and non eu taxing, COMBINE</span>
+
+eu_rawtax = find_htmltable("https://en.wikipedia.org/wiki/Value-added_tax", 7)
+eu_table = table_scraper(eu_rawtax)
+
+noneu_rawtax = find_htmltable("https://en.wikipedia.org/wiki/Value-added_tax", 8)
+noneu_table = table_scraper(noneu_rawtax)
+
+eu_table_rows = eu_table.select("Country", "Standard rate (current)")
+noneu_table_rows = noneu_table.select("Country", "Standard rate (current)")
+
+<span class="comment"># add tables together using for loop</span>
+
+eu_country = eu_table.column("Country")
+eu_rate = eu_table.column("Standard rate (current)")
+
+for i in range(len(eu_country)):
+    noneu_table_rows = noneu_table_rows.with_row([eu_country[i], eu_rate[i]])
+
+noneu_table_rows.sort("Standard rate (current)")
+
+<span class="comment"># we have to make the rates all integers, remove all characters after the percent sign and put into clean table</span>
+
+rates_unclean = noneu_table_rows.sort("Standard rate (current)")
+
+def remove_percent(array, symbol_to_remove):
+  newarray = []
+  for i in range(len(array)):
+    value = array[i].split(symbol_to_remove)[0]
+    if value.isdigit() == True:
+      value = float(value)
+    newarray.append(value)
+  return newarray
+
+ratepercent_clean = remove_percent(rates_unclean.column("Standard rate (current)"), "%")
+countryrate_clean = remove_percent(rates_unclean.column("Country"), "[")
+
+rates_clean = Table().with_columns("Country", countryrate_clean, "Tax Rate (%)", ratepercent_clean)
+rates_clean = rates_clean.sort("Country")
+
+<span class="comment"># combine the price data list with this one, check how many countries are the same and use all data we can</span>
+
+def combiner(table1, table2):
+
+  table1_country = table1.column("Country")
+  table2_country = table2.column("Country")
+
+  table1_price = table1.column("Price (CAD$)")
+
+  usable_countries = []
+  usable_tax = []
+  usable_pricing = []
+
+  <span class="comment"># Here, we check if country is in column, so that we know what data we can use</span>
+
+  for i in range(len(table1_country)):
+    for j in range(len(table2_country)):
+      if table1_country[i] == table2_country[j]:
+        usable_countries.append(table1_country[i])
+
+  for i in range(len(usable_countries)):
+    for j in range(len(table2_country)):
+      if usable_countries[i] == table2_country[j]:
+        usable_tax.append(table2.column("Tax Rate (%)")[i])
+
+  for i in range(len(usable_countries)):
+    for j in range(len(table2_country)):
+      if usable_countries[i] == table2_country[j]:
+        usable_pricing.append(table1.column("Price (CAD$)")[i])
+
+  table_withtax = Table().with_columns("Country", usable_countries, "Price (CAD$)", usable_pricing, "Tax Rate (%)", usable_tax)
+
+  return table_withtax
+
+<span class="comment">#add taxes</span>
+
+table_withtax = combiner(norank, rates_clean)
+  
+usable_price = table_withtax.column("Price (CAD$)")
+usable_tax = table_withtax.column("Tax Rate (%)")
+  
+applied_tax = []
+  
+for i in range(len(usable_price)):
+    tax = float(usable_price[i]) + (float(usable_tax[i])*0.01)*float(usable_price[i])
+    applied_tax.append(tax)
+  
+table_withtax = table_withtax.with_column("Price with Taxes (CAD$)", applied_tax)
+  
+            </p>
+        </pre> 
+
+        <img src="pictures/cuteapple.png" style="width:10%;height:10%;margin-left:auto;margin-right:auto;display:block;padding-top:50">
+
+
+        <div class="paradiv, onleft" style="padding-top: 50px">
+            <h1 class="center, header">3) Adding country's currency code</h1>
+            <p class="paratext">In order to add the country codes for each country, I had to find a table with both countries and their codes listed, so I could compare what countries I have data for as I did for the last step. I used the functions I made earlier to quickly import the HTML table, and compared the countries in my current table with the country code table to see what I can use. I ended up having 79 countries worth of data left after this step.<br><br>Result:</p>
+            <img src="pictures/3.png" style="margin-left: 17%; margin-top: -5%">
+        </div> 
+        <pre class="onright" style="margin-top: -550px">
+            <p class="codediv"><span class="comment"># use previously created method of scraping, we need to sort the name of the currency so import list for that too</span>
+
+html_codes = find_htmltable("https://gist.github.com/HarishChaudhari/4680482", 0)
+codes_table = table_scraper(html_codes)
+codes_table
+
+codetable_country = codes_table.column("Country")
+
+usable_countries = []
+preusable_countries = table_withtax.column("Country")
+
+for i in range(len(preusable_countries)):
+    for j in range(len(codetable_country)):
+    if preusable_countries[i] == codetable_country[j]:
+        usable_countries.append(codetable_country[j])
+
+codetable_usablecountry = codes_table.where("Country", are.contained_in(usable_countries)).sort("Country")
+table_withtax = table_withtax.where("Country", are.contained_in(usable_countries))
+
+table_withcurrency = table_withtax.with_column("Currency Code", codetable_usablecountry.column("Code")).relabel("Price (CAD$)", "Price of 1kg of Apples (CAD$)")
+            </p>
+        </pre> 
+
+        <img src="pictures/cuteapple.png" style="width:10%;height:10%;margin-left:auto;margin-right:auto;display:block;padding-top:50">
+
+        <div class="paradiv, onleft" style="padding-top: 50px">
+            <h1 class="center, header">4) Finding the difference between Canada's price and prices globally</h1>
+            <p class="paratext">In order to visually compare the price difference between 1 kilogram of apples in Canada versus globally, we need to ensure all prices are all in one currency, which already is in CAD thanks to the price table from step 1. We have to subtract each individual price with Canada's price using a loop, add that as a column, and generate the graph. The graph would be vertical if each name fit properly, but since there's so much data, I chose to make it a horizontal bar graph. Click on image to enlarge graph.<br><br>Result:</p>
+            <a href="pictures/4.png"><img src="pictures/4.png" style="width:40%;height:40%;margin-left: 40%; margin-top: -5%"></a>
+        </div> 
+        <pre class="onright" style="margin-top: -700px">
+            <p class="codediv">price_difference = []
+
+countries = table_withcurrency.column("Country")
+prices = table_withcurrency.column("Price with Taxes (CAD$)")
+canadaprice = table_withcurrency.where("Country", are.equal_to("Canada")).column("Price of 1kg of Apples (CAD$)")[0]
+
+for i in range(len(countries)):
+    difference = canadaprice - prices[i]
+    price_difference.append(canadaprice - prices[i])
+
+table_withcurrency = table_withcurrency.with_column("Difference", price_difference)
+
+
+table_withcurrency.barh("Country", "Difference")
+plots.title("Difference between price of 1kg of apples in Canada vs price globally")
+            </p>
+        </pre> 
+
+        <img src="pictures/cuteapple.png" style="width:10%;height:10%;margin-left:auto;margin-right:auto;display:block;padding-top:50">
+
+
+        <div class="paradiv, onleft" style="padding-top: 50px">
+            <h1 class="center, header">5) External factors</h1>
+            <p class="paratext">Apples are one of many types of fruit cultivated by various countries every year, with some countries cultivating a lot more fruit than others. Looking at a list of countries by fruit production, it is easy to see how much the amounts vary. Countries that produce higher amounts of fruit are more likely to sell them for lower costs, as import fees are far lower than countries that need to outsource them. Using a table detailing amount of fruit produced in tonnes by each country, I extract the data I can for the countries I can use, and make a new column. The numbers are converted to scientific notation for simplicity of viewing. Our final total is 79 countries worth of data, quite far from the starting amount of 97. Here is a bar graph representing the data, as well as the final table.<br><br>Result:</p>
+            <img src="pictures/5p2.png" style="margin-left: 17%; margin-top: -5%">
+            <img src="pictures/5p1.png" style="margin-left: 17%; margin-top: 0%">
+
+        </div> 
+        <pre class="onright" style="margin-top: -1080px">
+            <p class="codediv"><span class="comment"># get tonnes of fruit table, put inside table, and apply to graph</span>
+
+tonnesfruittable = table_scraper(find_htmltable("https://en.wikipedia.org/wiki/List_of_countries_by_fruit_production", 1))
+
+tonnesfruit_countries = tonnesfruittable.column("Country/Region")
+
+usable_countries = []
+preusable_countries = table_withcurrency.column("Country")
+
+for i in range(len(preusable_countries)):
+    for j in range(len(tonnesfruit_countries)):
+    if "People's Republic of China" in tonnesfruit_countries[i]:
+        tonnesfruit_countries[j] = "China"
+    if preusable_countries[i] == tonnesfruit_countries[j]:
+        usable_countries.append(tonnesfruit_countries[j])
+
+tonnesfruittable = tonnesfruittable.sort("Country/Region").where("Country/Region", are.contained_in(usable_countries))
+
+def lower(a):
+    return a/1000 <span class="comment"># now is a x10^3</span>
+
+fruitprod = tonnesfruittable.apply(int, "Fruit production (tonnes)")
+fruitprod = lower(fruitprod)
+
+table_withfactor = table_withcurrency.with_column("Fruit Production (tonnes) (x10^3)", fruitprod)
+table_withfactor = table_withfactor.sort("Price with Taxes (CAD$)")
+
+<span class="comment"># create scatterplot to compare</span>
+
+table_withfactor.bar("Fruit Production (tonnes) (x10^3)", "Price with Taxes (CAD$)")
+plots.title("Fruit production vs Price of 1kg of Apples")
+            </p>
+        </pre> 
+
+        <img src="pictures/cuteapple.png" style="width:10%;height:10%;margin-left:auto;margin-right:auto;display:block;padding-top:500px">
+
+        <div class="paradiv">
+            <h1 class="center, header" ">Conclusion</h1>
+            <p class="paratext">From the data, it has been observed that there is a correlation between the price of apples with the amount of fruit production, in that they are roughly proportional to one another. Correlation does not mean causation, but this is a pretty uniform piece of data that looks quite useful. Factors other than individual country's fruit production are not as strong, but still make good points, including demand, which is seen in ways like desire for organic versus fair trade fruit and the taste of the specific country causing them not to eat as many of the fruit.</p>
+        </div>
+
+        <p style="text-align:center; margin-top: 10%">Credits:
                 <br>
             <a href="https://www.numbeo.com/cost-of-living/prices_by_country.jsp?displayCurrency=CAD&itemId=110">numbeo.com -- table of prices of 1kg of apples for many countries, in CAD</a>
                 <br>
             <a href="https://gist.github.com/HarishChaudhari/4680482">Github table listing country codes by Harish Chaudhari</a>
                 <br>
-            <a href="https://en.wikipedia.org/wiki/Value-added_tax">Table of taxes</a>
+            <a href="https://en.wikipedia.org/wiki/List_of_countries_by_tax_rates">Table of taxes</a>
                 <br>
             <a href="https://en.wikipedia.org/wiki/List_of_countries_by_fruit_production">Table of fruit production (tonnes) by country</a>
+                <br>
+            <a href="https://pngtree.com/freepng/apple-watercolor-apple-cartoon-apple-apple_3809210.html">Cute apple clipart</a>
+                <br>
+            <a href="https://unsplash.com/photos/red-and-brown-round-fruits-abSGJhSzRMI">Apples title image</a>
         </p>
     </body>
 
