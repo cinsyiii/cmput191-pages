@@ -21,7 +21,7 @@
         <img src="pictures/cuteapple.png" style="width:10%;height:10%;margin-left:auto;margin-right:auto;display:block;padding-top:40px">
 
         <div class="paradiv, onleft" style="padding-top: 50px">
-            <h1 class="center, header">1) Importing the table</h1>
+            <h1 class="center, header"><a href="https://www.numbeo.com/cost-of-living/prices_by_country.jsp?displayCurrency=CAD&itemId=110">1) Importing the table</a></h1>
             <p class="paratext">I imported an HTML table providing the price of 1 kilogram of apples of 97 countries, as well as the rank of each country in order, from numbeo.com. I used BeautifulSoup to parse the table and Pandas (data analysis library) to convert the table into something usable.<br><br>Result:</p>
             <img src="pictures/1.jpg" style="margin-left: 35%; margin-top: -5%">
         </div> 
@@ -64,7 +64,7 @@ imported
 
 
         <div class="paradiv, onleft" style="padding-top: 50px">
-            <h1 class="center, header">2) Tidying Data, adding Tax Rates</h1>
+            <h1 class="center, header"><a href="https://en.wikipedia.org/wiki/List_of_countries_by_tax_rates">2) Tidying Data, adding Tax Rates</a></h1>
             <p class="paratext">Here, I removed the rank column, and used a table providing percentage tax rates to acquire the percentage for every country I could. I used a loop to figure out what countries are provided in the list versus the list I already have, so that I know what to eliminate. This ended up with the number of countries I have the data to use to reduce to 87. I added a column for the percentage tax rate, as well as the price with taxes applied.<br><br>Result:</p>
             <img src="pictures/2.jpg" style="margin-left: 18%; margin-top: -5%">
         </div> 
@@ -179,7 +179,7 @@ table_withtax = table_withtax.with_column("Price with Taxes (CAD$)", applied_tax
 
 
         <div class="paradiv, onleft" style="padding-top: 50px">
-            <h1 class="center, header">3) Adding country's currency code</h1>
+            <h1 class="center, header"><a href="https://gist.github.com/HarishChaudhari/4680482">3) Adding country's currency code</a></h1>
             <p class="paratext">In order to add the country codes for each country, I had to find a table with both countries and their codes listed, so I could compare what countries I have data for as I did for the last step. I used the functions I made earlier to quickly import the HTML table, and compared the countries in my current table with the country code table to see what I can use. I ended up having 79 countries worth of data left after this step.<br><br>Result:</p>
             <img src="pictures/3.png" style="margin-left: 17%; margin-top: -5%">
         </div> 
@@ -237,7 +237,7 @@ plots.title("Difference between price of 1kg of apples in Canada vs price global
 
 
         <div class="paradiv, onleft" style="padding-top: 50px">
-            <h1 class="center, header">5) External factors</h1>
+            <h1 class="center, header"><a href="https://en.wikipedia.org/wiki/List_of_countries_by_fruit_production">5) External factors</a></h1>
             <p class="paratext">Apples are one of many types of fruit cultivated by various countries every year, with some countries cultivating a lot more fruit than others. Looking at a list of countries by fruit production, it is easy to see how much the amounts vary. Countries that produce higher amounts of fruit are more likely to sell them for lower costs, as import fees are far lower than countries that need to outsource them. Using a table detailing amount of fruit produced in tonnes by each country, I extract the data I can for the countries I can use, and make a new column. The numbers are converted to scientific notation for simplicity of viewing. Our final total is 79 countries worth of data, quite far from the starting amount of 97. Here is a bar graph representing the data, as well as the final table.<br><br>Result:</p>
             <img src="pictures/5p2.png" style="margin-left: 17%; margin-top: -5%">
             <img src="pictures/5p1.png" style="margin-left: 17%; margin-top: 0%">
